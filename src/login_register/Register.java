@@ -60,6 +60,8 @@ public class Register extends javax.swing.JFrame {
         jTextField_Number.setBorder(field_border);
         
     }
+    listOfUser list = new listOfUser();
+    
     
 
     /**
@@ -509,7 +511,7 @@ public class Register extends javax.swing.JFrame {
          {
              PreparedStatement ps;
              ResultSet rs;
-             String registerUserQuery = "INSERT INTO `users`(`First Name`, `Middle Name`, `Last Name`, `Email`, `Password`, `Number`) VALUES (?,?,?,?,?,?)";
+             String registerUserQuery = "INSERT INTO `users`(`FirstName`, `MiddleName`, `LastName`, `Email`, `Password`, `Number`) VALUES (?,?,?,?,?,?)";
              
              try {
                  ps = Connct.getConnection().prepareStatement(registerUserQuery);
@@ -541,6 +543,12 @@ public class Register extends javax.swing.JFrame {
              
          }
      }
+        list.setVisible(true);
+        list.pack();
+        list.setLocationRelativeTo(null);
+        list.setLocationRelativeTo(null);
+                 //close the current form(log in form)
+                 this.dispose();
 
     }//GEN-LAST:event_jButton_RegisterActionPerformed
 

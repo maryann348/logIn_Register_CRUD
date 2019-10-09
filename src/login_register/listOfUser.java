@@ -6,8 +6,20 @@
 
 package login_register;
 
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -20,6 +32,52 @@ public class listOfUser extends javax.swing.JFrame {
      */
     public listOfUser() {
         initComponents();
+        show_user();
+        
+        
+    }
+    Information info = new Information();
+    
+    public ArrayList<User> userList(){
+        ArrayList<User> usersList = new ArrayList<>();
+         
+//             String Drive =("com.mysql.jdbc.Driver");  
+//            String url = ("jdbc:mysql://localhost:3306;dbname = users_db");
+//            Connection con=DriverManager.getConnection(url,"root"," ");  
+            String query = "SELECT * FROM users";
+            PreparedStatement st ;
+            ResultSet rs;
+            try {
+                st = Connct.getConnection().prepareStatement(query);
+                rs = st.executeQuery();
+                User user;
+            while(rs.next()){
+                user = new User(rs.getString("FirstName"),rs.getString("MiddleName"),rs.getString("LastName"),rs.getString("Email"),rs.getString("Password"),rs.getString("Number"));
+                usersList.add(user);
+                
+            }
+            
+         }
+         catch (Exception e){
+             JOptionPane.showMessageDialog(null, e);
+         }
+         return usersList;
+    }
+    public void show_user()
+    {
+        ArrayList<User> list = userList();
+        DefaultTableModel model =(DefaultTableModel)jTable_listOfUser.getModel();
+        Object[] row = new Object[6];
+        for(int i = 0 ; i<list.size();i++){
+            row[0]=list.get(i).getfname();
+            row[1]=list.get(i).getmname();
+            row[2]=list.get(i).getlname();
+            row[3]=list.get(i).getemail();
+            row[4]=list.get(i).getpassword();
+            row[5]=list.get(i).getnumber();
+            model.addRow(row);
+        }
+        
     }
 
     /**
@@ -31,31 +89,100 @@ public class listOfUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel_minimize = new javax.swing.JLabel();
+        jLabel_close = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableListofUsers = new javax.swing.JTable();
+        jTable_listOfUser = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setText("List of Users");
+        jPanel1.setBackground(new java.awt.Color(51, 102, 255));
 
-        jTableListofUsers.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("LIST of USERs");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(30, 30, 30))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel_minimize.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel_minimize.setText(" -");
+        jLabel_minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_minimizeMouseClicked(evt);
+            }
+        });
+
+        jLabel_close.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel_close.setText("  x");
+        jLabel_close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel_closeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel_closeMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(223, 223, 223)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel_minimize, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_close, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_close, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_minimize))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jTable_listOfUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "FirstName", "MiddleName", "LastName", "Email"
+                "First Name", "Middle Name", "Last Name", "Email", "Password", "Number"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -66,69 +193,112 @@ public class listOfUser extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableListofUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTable_listOfUser.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableListofUsersMouseClicked(evt);
+                jTable_listOfUserMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableListofUsers);
-        if (jTableListofUsers.getColumnModel().getColumnCount() > 0) {
-            jTableListofUsers.getColumnModel().getColumn(3).setMinWidth(300);
-            jTableListofUsers.getColumnModel().getColumn(3).setMaxWidth(300);
+        jScrollPane1.setViewportView(jTable_listOfUser);
+        if (jTable_listOfUser.getColumnModel().getColumnCount() > 0) {
+            jTable_listOfUser.getColumnModel().getColumn(0).setResizable(false);
+            jTable_listOfUser.getColumnModel().getColumn(1).setResizable(false);
+            jTable_listOfUser.getColumnModel().getColumn(2).setResizable(false);
+            jTable_listOfUser.getColumnModel().getColumn(3).setResizable(false);
+            jTable_listOfUser.getColumnModel().getColumn(4).setResizable(false);
+            jTable_listOfUser.getColumnModel().getColumn(5).setResizable(false);
         }
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTableListofUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListofUsersMouseClicked
-       int row = jTableListofUsers.getSelectedRow();
-       int column = jTableListofUsers.getSelectedRow();
-       String data = "";
-       for(int i = 0; i<column; i++){
-           data += jTableListofUsers.getValueAt(row, i)+"\n";
-       }
-        JOptionPane.showConfirmDialog(null, data);
-    }//GEN-LAST:event_jTableListofUsersMouseClicked
+    private void jTable_listOfUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_listOfUserMouseClicked
+        TableModel model =jTable_listOfUser.getModel();
+        int index = jTable_listOfUser.getSelectedRow();
+        
+        String fname = model.getValueAt(index, 0).toString();
+        String mname = model.getValueAt(index, 1).toString();
+        String lname = model.getValueAt(index, 2).toString();
+        String email = model.getValueAt(index, 3).toString();
+        String password = model.getValueAt(index, 4).toString();
+        String number = model.getValueAt(index, 5).toString();
+        
+        
+        info.setVisible(true);
+        info.pack();
+        info.setLocationRelativeTo(null);
+        this.dispose();
+//        info.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        info.jTextField_fname.setText(fname);
+        info.jTextField_mname.setText(mname);
+        info.jTextField_lname.setText(lname);
+        info.jTextField_email.setText(email);
+        info.jTextField_password.setText(password);
+        info.jTextField_number.setText(number);
+        
+       
+//         try {
+//
+//             
+//                 // show a new form
+//                  Information info = new Information();
+//                 info.setVisible(true);
+//                 info.pack();
+//                 info.setLocationRelativeTo(null);
+//                 //close the current form(log in form)
+//                 this.dispose();
+//                 
+//                 
+//             }catch(Exception e) {
+//                 //error message
+//                 JOptionPane.showMessageDialog(null, e);
+//
+//             }
+       
+         
+         
+       
+    }//GEN-LAST:event_jTable_listOfUserMouseClicked
+
+    private void jLabel_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_closeMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jLabel_closeMouseClicked
+
+    private void jLabel_closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_closeMouseEntered
+        Border jlabelborder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
+        jLabel_close.setBorder(jlabelborder);
+        jLabel_close.setForeground(Color.black);
+    }//GEN-LAST:event_jLabel_closeMouseEntered
+
+    private void jLabel_closeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_closeMouseExited
+        Border jlabelborder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
+        jLabel_close.setBorder(jlabelborder);
+        jLabel_close.setForeground(Color.white);
+    }//GEN-LAST:event_jLabel_closeMouseExited
+
+    private void jLabel_minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_minimizeMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel_minimizeMouseClicked
 
     
     /**
@@ -169,8 +339,11 @@ public class listOfUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel_close;
+    private javax.swing.JLabel jLabel_minimize;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableListofUsers;
+    private javax.swing.JTable jTable_listOfUser;
     // End of variables declaration//GEN-END:variables
 }

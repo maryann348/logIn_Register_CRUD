@@ -50,7 +50,7 @@ public class Connct {
        return connect;
     }
 
-    static Object getConnetion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    static Object getConnetion() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 }
